@@ -3,22 +3,23 @@ package pl.itacademy;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.*;
+import static pl.itacademy.Sex.*;
 
 public class Java8Tester {
 
 	public static void main(String[] args) {
 
 		List<Person> people = Arrays.asList(
-				new Person("Jan", "Nowak", "Kraków", LocalDate.of(1990, 01, 01), Sex.MALE, 4000),
-				new Person("Adam", "Słodowy", "Warszawa", LocalDate.of(1950, 05, 06), Sex.MALE, 2000),
-				new Person("Anna", "Iksińska", "Kraków", null, Sex.FEMALE, 3000),
-				new Person("Gertuda", "Nowak", "Łódź", LocalDate.of(1920, 12, 12), Sex.FEMALE, 1500),
-				new Person("Tomasz", "Bogacki", "Warszawa", LocalDate.of(1975, 10, 10), Sex.MALE, 10000));
+				new Person("Jan", "Nowak", "Kraków", LocalDate.of(1990, 01, 01), MALE, 4000),
+				new Person("Adam", "Słodowy", "Warszawa", LocalDate.of(1950, 05, 06), MALE, 2000),
+				new Person("Anna", "Iksińska", "Kraków", null, FEMALE, 3000),
+				new Person("Gertuda", "Nowak", "Łódź", LocalDate.of(1920, 12, 12), FEMALE, 1500),
+				new Person("Tomasz", "Bogacki", "Warszawa", LocalDate.of(1975, 10, 10), MALE, 10000));
 
 		// ------------- Men under 65 ----------------//
 
 		List<Person> menUnder65 = people.stream()
-				.filter(person -> person.getSex() == Sex.MALE)
+				.filter(person -> person.getSex() == MALE)
 				.filter(person -> person.getAge().orElse(999) < 65)
 				.sorted(Comparator.comparing(Person::getLastName))
 				.collect(Collectors.toList());
@@ -29,7 +30,7 @@ public class Java8Tester {
 		// ------------- Women with salary under 5000 ----------------//
 
 		List<Person> womenUnder5000 = people.stream()
-				.filter(person -> person.getSex() == Sex.FEMALE)
+				.filter(person -> person.getSex() == FEMALE)
 				.filter(person -> person.getSalary() < 5000)
 				.collect(Collectors.toList());
 
@@ -79,10 +80,12 @@ public class Java8Tester {
 		System.out.println();
 		userNames.forEach(System.out::println);
 
-		// ------------- Grouped by city ----------------//
+		// ------------- User names grouped by city ----------------//
 
-		Map<String, List<Person>> zamieszkanie = people.stream()
-				.collect(Collectors.groupingBy(Person::getCity));
+		Map<String, List<String>> zamieszkanie = people.stream()
+				.collect(Collectors.groupingBy(Person::getCity,
+						Collectors.mapping(person->createUserName(person),
+						Collectors.toList())));
 
 		System.out.println("\nGrouped by city");
 		zamieszkanie.forEach((k, v) -> System.out.println(k + ": " + v));
