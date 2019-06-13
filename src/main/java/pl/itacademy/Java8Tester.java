@@ -84,8 +84,8 @@ public class Java8Tester {
 
 		Map<String, List<String>> zamieszkanie = people.stream()
 				.collect(Collectors.groupingBy(Person::getCity,
-						Collectors.mapping(person->createUserName(person),
-						Collectors.toList())));
+						Collectors.mapping(person -> createUserName(person),
+								Collectors.toList())));
 
 		System.out.println("\nGrouped by city");
 		zamieszkanie.forEach((k, v) -> System.out.println(k + ": " + v));
@@ -110,11 +110,11 @@ public class Java8Tester {
 	 * @return username as string
 	 */
 	public static String createUserName(Person person) {
-		return person.getFirstName().substring(0, 1) 
+		return person.getFirstName().substring(0, 1)
 				+ removePolish(person.getLastName())
 				+ person.getDayOfBirth().orElse(LocalDate.now()).getYear();
 	}
-	
+
 	/**
 	 * <p>
 	 * Removes polish diacritic marks from a string
@@ -123,25 +123,22 @@ public class Java8Tester {
 	 * @return text without polish marks
 	 */
 	public static String removePolish(String text) {
-		String result = text.chars()
-				.map(letter -> remover(letter))
-				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-				.toString();
-		return result;
-	}
 
-	private static int remover(int letter) {
+		final String polishText = "ąćęłńóśżźĄĆĘŁŃÓŚŻŹ";
+		final String poliszText = "acelnoszzACELNOSZZ";
 
-		final char[] polishText = "ąćęłńóśżźĄĆĘŁŃÓŚŻŹ".toCharArray();
-		final char[] poliszText = "acelnoszzACELNOSZZ".toCharArray();
+		char[] textAsChars = text.toCharArray();
 
-		if (letter > 127) { //standard ASCII are not checked at all
-			for (int pos = 0; pos < polishText.length; pos++) {
-				if (letter == polishText[pos]) {
-					return poliszText[pos];
+		for (int i = 0; i < textAsChars.length; i++) {
+			char letter = textAsChars[i];
+			if (letter > 127) { // standard ASCII are not checked at all
+				for (int pos = 0; pos < polishText.length(); pos++) {
+					if (letter == polishText.charAt(pos)) {
+						textAsChars[i] = poliszText.charAt(pos);
+					}
 				}
 			}
 		}
-		return letter;
+		return new String(textAsChars);
 	}
 }
