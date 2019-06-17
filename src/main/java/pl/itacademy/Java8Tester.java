@@ -6,6 +6,7 @@ import pl.itacademy.api.Sex;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.stream.Stream;
 
 public class Java8Tester {
@@ -23,11 +24,30 @@ public class Java8Tester {
         personArrayList.add(new Person("Jakub", "Nowak", Sex.Man, LocalDate.of(1957,12,9), 3200, new Address("Zamość")));
         personArrayList.add(new Person("Juliusz", "Jagiełło", Sex.Man, LocalDate.of(1933,11,10), 5500, new Address("Sandomierz")));
 
-        System.out.println(personArrayList.get(1));
+
+
         Stream<Person> personStream = personArrayList.stream();
 
-        //Stream<Person> filteredStream = personStream.
-                //filter(p -> p.getBirthDay() > )
+        // All man under 65 //
+
+        Stream<Person> manUnder65 = personStream
+                .filter(p -> p.getSex() == Sex.Man)
+                .filter(p -> p.getBirthDay().isAfter(LocalDate.of(1954, 6, 17)))
+                .sorted(Comparator.comparing(Person::getLastName));
+
+        System.out.println("Man under 65: " );
+        System.out.println();
+        manUnder65.forEach(System.out::println);
+
+        // All woman with salary less than 5000 //
+
+        Stream<Person> womanSalaryLess5000 = personStream
+                .filter(p -> p.getSex() == Sex.Woman)
+                .filter(p -> p.getSalary() < 5000)
+                .sorted(Comparator.comparing(Person::getLastName));
+
+        System.out.println("Woman with salary less 6500");
+        womanSalaryLess5000.forEach(System.out::println);
 
     }
 }
