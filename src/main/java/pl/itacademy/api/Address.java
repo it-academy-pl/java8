@@ -7,6 +7,10 @@ public class Address {
         City = city;
     }
 
+    public String getCity() {
+        return City;
+    }
+
     @Override
     public String toString() {
         return "Address{" +
