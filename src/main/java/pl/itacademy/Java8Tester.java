@@ -25,59 +25,58 @@ public class Java8Tester {
         personArrayList.add(new Person("Juliusz", "Jagiełło", Sex.Man, LocalDate.of(1933,11,10), 5500, new Address("Sandomierz")));
 
         // All man under 65 //
-
-        Stream<Person> manUnder65 = personArrayList
-                .stream()
-                .filter(p -> p.getSex() == Sex.Man)
-                .filter(p -> p.getBirthDay().isAfter(LocalDate.of(1954, 6, 18)))
-                .sorted(Comparator.comparing(Person::getLastName));
-
+        System.out.println();
         System.out.println("Man under 65: " );
         System.out.println();
-        manUnder65.forEach(System.out::println);
-        System.out.println("------------");
+
+        personArrayList.stream()
+                .filter(p -> p.getSex() == Sex.Man)
+                .filter(p -> p.getBirthDay().isAfter(LocalDate.of(1954, 6, 18)))
+                .sorted(Comparator.comparing(Person::getLastName))
+                .forEach(System.out::println);
+        System.out.println();
+        System.out.println("---------------------------------------");
         System.out.println( );
 
         // All woman with salary less than 5000 //
-
-        Stream<Person> womanSalaryLess5000 = personArrayList
-                .stream()
-                .filter(p -> p.getSex() == Sex.Woman)
-                .filter(p -> p.getSalary() < 5000)
-                .sorted(Comparator.comparing(Person::getLastName));
-
         System.out.println("Woman with salary less 6500: ");
         System.out.println();
-        womanSalaryLess5000.forEach(System.out::println);
-        System.out.println("------------");
+
+        personArrayList.stream()
+                .filter(p -> p.getSex() == Sex.Woman)
+                .filter(p -> p.getSalary() < 5000)
+                .sorted(Comparator.comparing(Person::getLastName))
+                .forEach(System.out::println);
+        System.out.println();
+        System.out.println("----------------------------------------");
         System.out.println();
 
         // All person younger than 18 years from Cracow //
-
-        Stream<Person> youngerThan18YearsCracow = personArrayList
-                .stream()
-                .filter(p -> p.getAddress().getCity().equals("Kraków"))
-                .filter(p -> p.getBirthDay().isAfter(LocalDate.of(2001,6,18)))
-                .sorted(Comparator.comparing(Person::getLastName));
         System.out.println("All person younger than 18 years from Cracow: ");
         System.out.println();
-        youngerThan18YearsCracow.forEach(System.out::println);
-        System.out.println("------------");
+
+        personArrayList.stream()
+                .filter(p -> p.getAddress().getCity().equals("Kraków"))
+                .filter(p -> p.getBirthDay().isAfter(LocalDate.of(2001,6,18)))
+                .sorted(Comparator.comparing(Person::getLastName))
+                .forEach(System.out::println);
+        System.out.println();
+        System.out.println("----------------------------------------");
         System.out.println();
 
         // All person not from Cracow //
-
-        Stream<Person> personNotFromCracow = personArrayList
-                .stream()
-                .filter(p -> ! p.getAddress().getCity().equals("Kraków"))
-                .sorted(Comparator.comparing(Person::getFirstName));
         System.out.println("All person not from Cracow: ");
         System.out.println();
-        personNotFromCracow.forEach(System.out::println);
-        System.out.println("------------");
+
+        personArrayList.stream()
+                .filter(p -> ! p.getAddress().getCity().equals("Kraków"))
+                .sorted(Comparator.comparing(Person::getFirstName))
+                .forEach(System.out::println);
+        System.out.println();
+        System.out.println("----------------------------------------");
         System.out.println();
 
-        
+
 
     }
 }
