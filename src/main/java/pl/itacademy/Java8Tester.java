@@ -7,7 +7,8 @@ import pl.itacademy.api.Sex;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
+
 
 public class Java8Tester {
 
@@ -45,7 +46,7 @@ public class Java8Tester {
         personArrayList.stream()
                 .filter(p -> p.getSex() == Sex.Woman)
                 .filter(p -> p.getSalary() < 5000)
-                .sorted(Comparator.comparing(Person::getLastName))
+                .sorted(Comparator.comparing(Person::getBirthDay))
                 .forEach(System.out::println);
         System.out.println();
         System.out.println("----------------------------------------");
@@ -76,7 +77,24 @@ public class Java8Tester {
         System.out.println("----------------------------------------");
         System.out.println();
 
+        avargeSalary(personArrayList);
+
+    }
+
+    // Methods //
+    public static void avargeSalary(ArrayList<Person> personArrayList){
+        personArrayList.stream()
+                .mapToDouble(p -> p.getSalary())
+                .average();
+        personArrayList.forEach(System.out::println);
+
+
+        }
+
+
+
+
 
 
     }
-}
+
