@@ -7,8 +7,6 @@ import pl.itacademy.api.Sex;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.stream.Collectors;
-
 
 public class Java8Tester {
 
@@ -85,10 +83,9 @@ public class Java8Tester {
     public static void avargeSalary(ArrayList<Person> personArrayList){
         personArrayList.stream()
                 .mapToDouble(p -> p.getSalary())
-                .average();
-        personArrayList.forEach(System.out::println);
-
-
+                .average()
+                .getAsDouble();
+        System.out.println(personArrayList);
         }
 
 
