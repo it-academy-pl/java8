@@ -80,42 +80,55 @@ public class Java8Tester {
         numberOfWomenInKrk(personArrayList);
         numberOfManAfter65(personArrayList);
         oldestPerson(personArrayList);
-
+        youngestFromKrk(personArrayList);
+        sumSalary(personArrayList);
     }
 
     // Methods //
     public static void avargeSalary(ArrayList<Person> personArrayList){
+        System.out.println("avargeSalary:");
        double avargeSalary = personArrayList.stream().mapToDouble(p -> p.getSalary()).average().orElse(0);
-
         System.out.println(avargeSalary);
         System.out.println();
         }
 
     public static void numberOfWomenInKrk(ArrayList<Person> personArrayList){
-        long numberOfWomen = personArrayList.stream()
-                .filter(p -> p.getAddress().getCity().equals("Kraków"))
-                .filter(p -> p.getSex() == Sex.Woman)
-                .count();
+        System.out.println("numberOfWomenInKrk:");
+        long numberOfWomen = personArrayList.stream().filter(p -> p.getAddress().getCity().equals("Kraków")).filter(p -> p.getSex() == Sex.Woman).count();
         System.out.println(numberOfWomen);
         System.out.println();
 
     }
 
     public static void numberOfManAfter65(ArrayList<Person> personArrayList){
+        System.out.println("numberOfManAfter65:");
         personArrayList.stream()
                 .filter(p -> p.getSex() == Sex.Man)
                 .filter(p -> p.getBirthDay().isBefore(LocalDate.of(1954, 6, 24)))
                 .sorted(Comparator.comparing(Person::getLastName))
                 .forEach(System.out::println);
-        System.out.println("Test numberOfMenAfter65");
         System.out.println();
     }
 
     public static void oldestPerson(ArrayList<Person> personArrayList){
-       Optional<Person> oldest = personArrayList.stream()
-                .sorted(Comparator.comparing(Person::getBirthDay))
-                .findFirst();
+        System.out.println("oldestPerson: ");
+        Optional<Person> oldest = personArrayList.stream().sorted(Comparator.comparing(Person::getBirthDay)).findFirst();
         System.out.println(oldest);
+        System.out.println();
+    }
+
+    public static void youngestFromKrk(ArrayList<Person> personArrayList){
+        System.out.println("youngestFromKrk: ");
+        Optional<Person> younger = personArrayList.stream().filter(p -> p.getAddress().getCity().equals("Kraków")).sorted(Comparator.comparing(Person::getBirthDay).reversed()).findFirst();
+        System.out.println(younger);
+        System.out.println();
+    }
+
+    public static void sumSalary(ArrayList<Person> personArrayList){
+        System.out.println("sumSalary: ");
+        int sum = personArrayList.stream().mapToInt(p -> p.getSalary()).sum();
+        System.out.println(sum);
+        System.out.println();
     }
 
 
