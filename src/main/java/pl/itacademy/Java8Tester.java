@@ -7,13 +7,14 @@ import pl.itacademy.api.Sex;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Optional;
 
 public class Java8Tester {
 
     public static void main(String[] args) {
         ArrayList<Person> personArrayList = new ArrayList<>();
         personArrayList.add(new Person("Jan", "Kowalski", Sex.Man, LocalDate.of(2005,1,13), 3100, new Address("Kraków")));
-        personArrayList.add(new Person("Patrycja", "Sroka", Sex.Woman, LocalDate.of(1980,3,1), 2100, new Address("Bydgoszcz")));
+        personArrayList.add(new Person("Patrycja", "Sroka", Sex.Woman, LocalDate.of(1980,3,1), 2100, new Address("Kraków")));
         personArrayList.add(new Person("Kazimierz", "Wielki", Sex.Man, LocalDate.of(1990,5,23), 5000, new Address("Łódź")));
         personArrayList.add(new Person("Piotr", "Zaleski", Sex.Man, LocalDate.of(1974,12,30), 7710, new Address("Rzeszów")));
         personArrayList.add(new Person("Elzbieta", "Konraska", Sex.Woman, LocalDate.of(2001,7,29), 1660, new Address("Katowice")));
@@ -76,29 +77,45 @@ public class Java8Tester {
         System.out.println();
 
         avargeSalary(personArrayList);
-        numberOfWomanInKrk(personArrayList);
+        numberOfWomenInKrk(personArrayList);
+        numberOfManAfter65(personArrayList);
+        oldestPerson(personArrayList);
 
     }
 
     // Methods //
     public static void avargeSalary(ArrayList<Person> personArrayList){
-        personArrayList.stream()
-                .mapToDouble(p -> p.getSalary())
-                .average()
-                .getAsDouble();
-        //System.out.println(personArrayList);
-        //System.out.println("test");
+       double avargeSalary = personArrayList.stream().mapToDouble(p -> p.getSalary()).average().orElse(0);
+
+        System.out.println(avargeSalary);
+        System.out.println();
         }
 
-    public static void numberOfWomanInKrk(ArrayList<Person> personArrayList){
-        personArrayList.stream()
+    public static void numberOfWomenInKrk(ArrayList<Person> personArrayList){
+        long numberOfWomen = personArrayList.stream()
                 .filter(p -> p.getAddress().getCity().equals("Kraków"))
                 .filter(p -> p.getSex() == Sex.Woman)
                 .count();
+        System.out.println(numberOfWomen);
+        System.out.println();
 
+    }
 
+    public static void numberOfManAfter65(ArrayList<Person> personArrayList){
+        personArrayList.stream()
+                .filter(p -> p.getSex() == Sex.Man)
+                .filter(p -> p.getBirthDay().isBefore(LocalDate.of(1954, 6, 24)))
+                .sorted(Comparator.comparing(Person::getLastName))
+                .forEach(System.out::println);
+        System.out.println("Test numberOfMenAfter65");
+        System.out.println();
+    }
 
-
+    public static void oldestPerson(ArrayList<Person> personArrayList){
+       Optional<Person> oldest = personArrayList.stream()
+                .sorted(Comparator.comparing(Person::getBirthDay))
+                .findFirst();
+        System.out.println(oldest);
     }
 
 
