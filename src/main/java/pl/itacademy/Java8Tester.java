@@ -76,6 +76,7 @@ public class Java8Tester {
         System.out.println();
 
         avargeSalary(personArrayList);
+        numberOfWomanInKrk(personArrayList);
 
     }
 
@@ -86,9 +87,19 @@ public class Java8Tester {
                 .average()
                 .getAsDouble();
         System.out.println(personArrayList);
+        System.out.println("test");
         }
 
+    public static void numberOfWomanInKrk(ArrayList<Person> personArrayList){
+        personArrayList.stream()
+                .filter(p -> p.getAddress().getCity().equals("Kraków"))
+                .filter(p -> p.getSex() == Sex.Woman)
+                .count();
 
+
+
+
+    }
 
 
 

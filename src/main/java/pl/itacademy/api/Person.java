@@ -1,6 +1,7 @@
 package pl.itacademy.api;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Person {
 
@@ -54,5 +55,23 @@ public class Person {
                 ", address=" + address +
                 ", sex=" + sex +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return salary == person.salary &&
+                Objects.equals(firstName, person.firstName) &&
+                Objects.equals(lastName, person.lastName) &&
+                Objects.equals(birthDay, person.birthDay) &&
+                Objects.equals(address, person.address) &&
+                sex == person.sex;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, birthDay, salary, address, sex);
     }
 }
