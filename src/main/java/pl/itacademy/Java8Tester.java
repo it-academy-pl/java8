@@ -86,8 +86,8 @@ public class Java8Tester {
                 .mapToDouble(p -> p.getSalary())
                 .average()
                 .getAsDouble();
-        System.out.println(personArrayList);
-        System.out.println("test");
+        //System.out.println(personArrayList);
+        //System.out.println("test");
         }
 
     public static void numberOfWomanInKrk(ArrayList<Person> personArrayList){
