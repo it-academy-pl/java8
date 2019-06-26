@@ -86,14 +86,14 @@ public class Java8Tester {
 
     // Methods //
     public static void avargeSalary(ArrayList<Person> personArrayList){
-        System.out.println("avargeSalary:");
+        System.out.println("avargeSalary: ");
        double avargeSalary = personArrayList.stream().mapToDouble(p -> p.getSalary()).average().orElse(0);
         System.out.println(avargeSalary);
         System.out.println();
         }
 
     public static void numberOfWomenInKrk(ArrayList<Person> personArrayList){
-        System.out.println("numberOfWomenInKrk:");
+        System.out.println("numberOfWomenInKrk: ");
         long numberOfWomen = personArrayList.stream().filter(p -> p.getAddress().getCity().equals("Kraków")).filter(p -> p.getSex() == Sex.Woman).count();
         System.out.println(numberOfWomen);
         System.out.println();
@@ -101,7 +101,7 @@ public class Java8Tester {
     }
 
     public static void numberOfManAfter65(ArrayList<Person> personArrayList){
-        System.out.println("numberOfManAfter65:");
+        System.out.println("numberOfManAfter65: ");
         personArrayList.stream()
                 .filter(p -> p.getSex() == Sex.Man)
                 .filter(p -> p.getBirthDay().isBefore(LocalDate.of(1954, 6, 24)))
@@ -131,6 +131,15 @@ public class Java8Tester {
         System.out.println();
     }
 
+    public static void anyPersonFirstNameA(ArrayList<Person> personArrayList){
+        System.out.println("Does any person has first letter 'A' in firstName");
+        boolean answer = personArrayList.stream().anyMatch(p ->(p.getFirstName()).)
+    }
+
+    public static void allPersonContainAInLastName(ArrayList<Person> personArrayList){
+        System.out.println("Does any person has first letter 'A' in firstName");
+        boolean answer = personArrayList.stream().allMatch(p -> p.getLastName().)
+    }
 
 
 
