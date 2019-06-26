@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class Java8Tester {
 
@@ -82,6 +83,8 @@ public class Java8Tester {
         oldestPerson(personArrayList);
         youngestFromKrk(personArrayList);
         sumSalary(personArrayList);
+        anyPersonFirstNameA(personArrayList);
+        allPersonContainAInLastName(personArrayList);
     }
 
     // Methods //
@@ -133,12 +136,16 @@ public class Java8Tester {
 
     public static void anyPersonFirstNameA(ArrayList<Person> personArrayList){
         System.out.println("Does any person has first letter 'A' in firstName");
-        boolean answer = personArrayList.stream().anyMatch(p ->(p.getFirstName()).)
+        boolean result = personArrayList.stream().anyMatch(p -> p.getFirstName().charAt(0) == 'A');
+        System.out.println(result);
+        System.out.println();
     }
 
-    public static void allPersonContainAInLastName(ArrayList<Person> personArrayList){
-        System.out.println("Does any person has first letter 'A' in firstName");
-        boolean answer = personArrayList.stream().allMatch(p -> p.getLastName().)
+   public static void allPersonContainAInLastName(ArrayList<Person> personArrayList){
+        System.out.println("does all persons contains letter 'a' in lastName");
+        boolean result = personArrayList.stream().anyMatch(p -> p.getLastName().contains("a"));
+        System.out.println(result);
+        System.out.println();
     }
 
 
